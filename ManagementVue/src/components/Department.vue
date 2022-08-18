@@ -1,56 +1,58 @@
 <template>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- <title>Bootstrap Simple Data Table</title> -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
-<!-- <h1>Details</h1> -->
-<div class="container-xl">
+                    <!-- <div class="col-sm-8"><h2> <b>Department management</b></h2></div> -->
+                    <div class="container-lg">
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <!-- <div class="col-sm-8"><h2> <b>Department management</b></h2></div> -->
-                    <div class="form"><router-link to="/Form"><button>Add Data</button></router-link></div>
+                    <div class="col-sm-8"><h2>Employee <b>Details</b></h2></div>
                     <div class="col-sm-4">
-                        <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" placeholder="Search&hellip;">
-                        </div>
-                    </div>
+                    
+                  <div class="form"><router-link to="/Form"><button class="btn btn-info add-new">Add Data</button></router-link></div>
+</div>
                 </div>
             </div>
+
 <div v-if="ishidden==true" v-on:click="ishidden==false">
 <!-- <input type="text" id="myInput" onkeyup="search()" placeholder="Search for names.." title="Type in a name"> -->
-  <table id="mytable" >
+  <table class="table table-bordered" >
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
-      <th scope="col">Delete</th>
-      <th scope="col">Update</th>
+      <th scope="col" >Id</th>
+      <th scope="col" >Name</th>
+      <th scope="col" >Delete</th>
+      <th scope="col" >Update</th>
     </tr>
     <tr v-for="(entry, i) in alldetails" :key="i">
-      <td class="col">{{ entry.id }}</td>
+      <td class="col">{{ entry.depart_id }}</td>
       <td class="col">{{ entry.name }}</td>
-      <td><button type="button" class="del" @click="deleteRow(entry.id)"></button></td>
+      <td><button type="button" class="del" @click="deleteRow(entry.depart_id)">Delete</button></td>
       <td>
-        <button type="button" class="update" @click="revertTable(entry)"></button></td>
+        <button type="button" class="update" @click="revertTable(entry)">Edit</button></td>
     </tr>
   </table>
   <h1>Total records:{{ alldetails.length }}</h1>
   </div> 
 <div v-else v-on:click="ishidden ==!ishidden">
-        <div>
-        <input type="text" placeholder="Name" required v-model="name" />
+  <div class="login-form">
+          <form>
+        <h2 class="text-center">Department</h2>  
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="Name" required v-model="name" />
       </div>
        <!-- <button v-if="editButton==true" type="button" @click="onSubmit">Submit</button> -->
-        <button type="button" @click="updateRow()">UpdateRow</button>
+        <button class="btn btn-primary btn-block" type="button" @click="updateRow()">UpdateRow</button>
        <!-- <button type="submit" @click="viewdata">View</button> -->
+       </form>
+       </div>
 </div>
 </div>
 </div>
@@ -61,7 +63,7 @@ import axios from "axios"
 export default {
   name: "Department",
   data: () => ({
-    id: "",
+    depart_id: "",
     name: "",
     alldetails: [],
     ishidden:true,
@@ -100,7 +102,7 @@ export default {
        if (confirm('Are you sure you want to Delete?')) {
         // this.alldetails.splice(inputid, 1);
        await this.instance.delete("/deletedep", 
-        { data: { id: inputid}}).then((result)=> {
+        { data: { depart_id: inputid}}).then((result)=> {
         this.del = result.data;
         this.select()
        }
@@ -117,17 +119,19 @@ export default {
         // console.log(this.alldetails[0].fname);
 
         // this.editInput['fname'] = this.alldetails[i]
-        this.id = entry.id
+        this.depart_id = entry.depart_id
         this.name = entry.name
         this.ishidden = false
       }
     },
     async updateRow() {
     const data ={
-      id: this.id,
+      depart_id: this.depart_id,
       name: this.name,
       }
-      await this.instance.patch("/updatedep", data, this.config);
+      console.log(data)
+      const update = await this.instance.patch("/updatedep", data, this.config);
+      console.log(update)
       this.ishidden = false
       alert("Updated")
       this.clearForm()
@@ -164,56 +168,152 @@ export default {
 </script>
 <style>
 body {
-    color: #566787;
-    background: #f5f5f5;
-    font-family: 'Roboto', sans-serif;
+    color: #1e4fa3;
+    background: #951464;
+    font-family: 'Open Sans', sans-serif;
 }
-.form{
-    width:50%;
-    border-radius: 20px;
+.login-form {
+    width: 340px;
+    margin: 50px auto;
+  	font-size: 15px;
 }
-.table-responsive {
-    margin: 30px 0;
+.login-form form {
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 15px;
+    font-weight: bold;
 }
 .table-wrapper {
-    min-width: 1000px;
+    width: auto;
+    margin: 30px auto;
     background: #fff;
-    padding: 20px;
+    padding: 20px;	
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .table-title {
     padding-bottom: 10px;
     margin: 0 0 10px;
-    min-width: 100%;
 }
 .table-title h2 {
-    margin: 8px 0 0;
+    margin: 6px 0 0;
     font-size: 22px;
 }
-.search-box {
-    position: relative;        
+.table-title .add-new {
     float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
 }
-.search-box input {
-    background-color: orange;
-    height: 34px;
-    border-radius: 20px;
-    padding-left: 35px;
-    color: black;
-    box-shadow: none;
+.table-title .add-new i {
+    margin-right: 4px;
 }
-.search-box input:focus {
-    border-color: #3FBAE4;
+table.table {
+    table-layout: auto;
 }
-.search-box i {
-    color: #a0a5b1;
-    position: absolute;
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+table.table th:last-child {
+    width: auto;
+}
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}    
+table.table td a.add {
+    color: #27C46B;
+}
+/* table.table td a.edit {
+    color: #FFC107;
+}
+table.table td a.delete {
+    color: #E34724;
+} */
+table.table td i {
     font-size: 19px;
-    top: 8px;
-    left: 10px;
 }
- .elements.style{
-    width:50%
- }
+table.table td a.add i {
+    font-size: 24px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}    
+table.table .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+table.table .form-control.error {
+    border-color: #f50000;
+}
+table.table td .add {
+    display: none;
+}
+button {
+  font-weight: bold;
+  line-height: 13px;
+   min-width: 100px; 
+  border-radius: 50px;
+  text-align: center;
+  width: 50%;
+  font-size: large;
+  padding: 10px;
+  background-color: rgb(198, 70, 70);
+}
 
-</style>
+.del {
+  font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: auto;
+      color: white;
+    border-radius: 50px;
+    line-height: 13px;
+  background-color: rgb(198, 70, 70);
+}
+.del:hover {
+  background-color: lightskyblue;
+  color: black;
+}
+
+.update {
+  font-weight: bold;
+    font-size: 12px;
+    color: white;
+    text-shadow: none;
+    min-width: auto;
+    border-radius: 50px;
+    line-height: 13px;
+  background-color: green;
+}
+.update:hover {
+  background-color: lightskyblue;
+   color: black;
+}
+
+
+
+ </style>

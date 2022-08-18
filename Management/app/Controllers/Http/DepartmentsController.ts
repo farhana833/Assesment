@@ -30,9 +30,9 @@ export default class DepartmentsController {
         }
 }
 public async updatedep ({request}){
-    try{await request.validate(DepartmentValidator)}catch{ return("validation error")}
+    //try{await request.validate(DepartmentValidator)}catch{ return("validation error")}
     try{
-    const update = await Department.findOrFail(request.input('id'))
+    const update = await Department.findOrFail(request.input('depart_id'))
     update.name = request.input("name")
     await update.save()}
     catch {
@@ -40,10 +40,10 @@ public async updatedep ({request}){
     }
 }
 public async deletedep ({request}){
-    try{await request.validate(DepartmentValidator)}catch{ return("validation error")}
+    // try{await request.validate(DepartmentValidator)}catch{ return("validation error")}
     try{
-    const deletedep = await Department.findOrFail(request.input('id'))
-    await deletedep.delete()}
+    const deletedep = await Department.findOrFail(request.input('depart_id'))
+    return await deletedep.delete()}
     catch {
         return("can't be deleted")
     }

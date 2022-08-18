@@ -4,7 +4,7 @@ import Department from './Department'
 
 export default class Employee extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public emp_id: number
  
   @column()
   public name: string
@@ -23,7 +23,7 @@ export default class Employee extends BaseModel {
 
   @column()
   @hasOne(() => Department)
-  public department_id: HasOne<typeof Department>
+  public depart_id: HasOne<typeof Department>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

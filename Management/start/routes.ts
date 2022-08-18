@@ -26,9 +26,7 @@ Route.group(() => {
   Route.get('/selectemp', 'EmployeesController.selectemp');
   Route.post('/insertemp', 'EmployeesController.insertemp');
   Route.patch('/updateemp', 'EmployeesController.updateemp');
-  Route.delete('/deleteemp', 'EmployeesController.deleteemp');
-
-  Route.get('/join', 'EmployeesController.join');})
+  Route.delete('/deleteemp', 'EmployeesController.deleteemp');})
 
   Route.group(() => {
     Route.get('/selectdep', 'DepartmentsController.selectdep');

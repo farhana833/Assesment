@@ -5,15 +5,13 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.increments('emp_id')
       table.string('name')
       table.date('dob')
       table.date('doj')
       table.string('email').unique()
       table.bigint('phone')
-      table.integer('id')
-       .references('departments.id')
-       .unsigned()
+      table.integer('depart_id').references('departments.depart_id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
@@ -27,5 +25,10 @@ export default class extends BaseSchema {
     this.schema.dropTable(this.tableName)
   }
 }
+
+
+
+
+
 
 

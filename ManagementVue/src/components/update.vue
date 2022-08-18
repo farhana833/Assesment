@@ -1,20 +1,25 @@
 <template>
-  <div class="container">
-    <h1>Employee Details</h1>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
+          <!-- <h1>Department Details</h1> -->
+            <div class="login-form">
     <form>
-      <div>
+        <h2 class="text-center">Department</h2>  
+      <div class="form-group">
         <!-- <label for="name">firstName</label> -->
-        <div>
-          <input type="number" placeholder="Id" required v-model="id" />
+          <input class="form-control" type="number" placeholder="Id" required v-model="depart_id" />
         </div>
-        <input type="text" placeholder="Name" required v-model="name" />
-      </div>
-      <div>
-        <input type="number" placeholder="Age" minlength="150" maxlength="150" required v-model="age" />
+        <div class="form-group">
+        <input class="form-control" type="text" placeholder="Name" required v-model="name" />
       </div>
        <!-- <button v-if="editButton==true" type="button" @click="onSubmit">Submit</button> -->
-        <button type="button" @click="updateRow(updateIndex)">UpdateRow</button>
-       <button type="submit" @click="viewdata">View</button>
+        <button class="btn btn-primary btn-block"  type="button" @click="updateRow(updateIndex)">UpdateRow</button>
+       <!-- <button class="btn btn-primary btn-block" type="submit" @click="viewdata">View</button> -->
 
     </form>
   </div>
@@ -26,7 +31,7 @@ export default {
   name: "Details",
   data() {
     return {
-      id: "",
+      depart_id: "",
       name: "",
       age: "",
       instance: null,
@@ -53,9 +58,8 @@ export default {
   methods: {
     async onSubmit() {
       const Details = {
-        id: this.id,
+        id: this.depart_id,
         name: this.name,
-        age: this.age
       }
       if(!/^[a-zA-Z]+(?:-[a-zA-Z]+)*$/.test(this.name)){
         alert("Enter name")
@@ -81,126 +85,34 @@ export default {
     clearForm() {
       this.id = "";
       this.name = "";
-      this.age = "";
-
     },
   }
 }
 </script>
 
 <style>
-.del:hover {
-  background-color: orange;
+
+.login-form {
+    width: 340px;
+    margin: 50px auto;
+  	font-size: 15px;
+}
+.login-form form {
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 15px;
+    font-weight: bold;
 }
 
-.update:hover {
-  background-color: orange;
-}
-
-input {
-  text-align: center;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  /* background: black; */
-  box-sizing: border-box;
-  font-size: 15px;
-  border-radius: 25px;
-
-}
-
-/* form {
-  background-color: grey;
-}
-fieldset {
-  background-color: white;
-  color: black;
-} */
-button {
-  font-weight: bold;
-  margin-top: 10px;
-  border-radius: 25px;
-  margin-left: 25%;
-  text-align: center;
-  width: 50%;
-  font-size: large;
-  padding: 12px 20px;
-  /* margin: 8px; */
-  box-sizing: border-box;
-  background-color: pink;
-}
-
-.del {
-  background-color: red;
-}
-
-.update {
-  background-color: green;
-}
-
-h1 {
-  text-align: center;
-  color: orange;
-  font-size: 30px;
-}
-
-table {
-  margin-top: 20px;
-}
-
-th {
-  font-size: larger;
-  font-weight: 100;
-  color: black;
-}
-
-th,
-td {
-  font-size: 15px;
-  padding: 25px;
-  text-align: left;
-  border-color: azure;
-  background-color: orange;
-  color: black;
-}
-
-th {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-td {
-  background-color: grey;
-  font-size: large;
-}
-
-#female {
-  accent-color: lightgreen;
-}
-
-#male {
-  accent-color: violet;
-}
-
-#others {
-  accent-color: red;
-}
-
-.container {
-  border-color: blueviolet;
-}
-
-/* fieldset {
-  color: pink;
-} */
-
-input:hover {
-  background-color: pink;
-  color: black;
-}
-
-button:hover {
-  background-color: green;
-  color: white;
-}
 </style>
