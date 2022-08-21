@@ -1,0 +1,16 @@
+create trigger foo_audit_trigger
+
+                  after insert or update or delete on employees
+
+                  for each row 
+
+                  execute procedure foo_audit_information();
+
+
+ create trigger foo_audit_trigger
+
+                  after insert or update or delete on employees
+
+                  for each row 
+
+                  execute procedure foo_audit_information();

@@ -52,7 +52,7 @@ export default class EmployeesController {
         //try{await request.validate(EmployeeValidator)}catch{ return("validation error")}
         try{
         const deleteemp = await Employee.findOrFail(request.input('emp_id'))
-        deleteemp.name = request.delete()
+        // deleteemp.name = request.delete()
         await deleteemp.delete()}
         catch {
             return("can't be deleted")

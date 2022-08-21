@@ -9,7 +9,9 @@ export default class DepartmentsController {
         public async selectdep() 
         {
      try{
-            return await Department.all()}
+            const data =  await Department.all()
+            return data
+        }
         catch {
             return(" department is not found")
         }

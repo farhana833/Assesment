@@ -275,10 +275,10 @@ table.table td .add {
 button {
   font-weight: bold;
   line-height: 13px;
-   min-width: 100px; 
+    min-width: 150px;  
   border-radius: 50px;
   text-align: center;
-  width: 50%;
+  
   font-size: large;
   padding: 10px;
   background-color: rgb(198, 70, 70);

@@ -41,8 +41,9 @@
               <td class="col">{{ entry.dob }}</td>
               <td class="col">{{ entry.doj }}</td>
               <td class="col">{{ entry.email }}</td>
-              <td class="col">{{ entry.phone }}</td>
-              <td class="col">{{ entry.department_id }}</td>
+           
+           <td class="col">{{ entry.phone }}</td>
+              <td class="col">{{ entry.depart_id }}</td>
               <td>
                 <button
                   type="button"
@@ -107,6 +108,7 @@ export default {
     email: "",
     phone: "",
     depart_id: "",
+    del: "",
     alldetails: [],
     deparray: [],
     ishidden: true,
@@ -146,14 +148,17 @@ export default {
       this.alldetails = view.data;
       // console.log(this.alldetails)
     },
-    deleteRow(inputid) {
+    async deleteRow(inputid) {
       if (confirm("Are you sure you want to Delete?")) {
         // this.alldetails.splice(inputid, 1);
-        this.instance
-          .delete("/deleteemp", { data: { emp_id: inputid } })
+        await this.instance.delete("/deleteemp", { data: { emp_id: inputid } })
           .then((result) => {
-            this.del = result.data;
+            this.result;
             this.select();
+        //      await this.instance.delete("/deletedep", 
+        // { data: { depart_id: inputid}}).then((result)=> {
+        // this.del = result.data;
+        // this.select()
           });
       }
     },
@@ -328,17 +333,17 @@ table.table .form-control.error {
 table.table td .add {
     display: none;
 }
-button {
+/* button {
   font-weight: bold;
   line-height: 13px;
-   /* min-width: 100px; */
+   min-width: 100px;
   border-radius: 50px;
   text-align: center;
   width: 50%;
   font-size: large;
   padding: 10px;
   background-color: rgb(198, 70, 70);
-}
+} */
 
 .del {
   font-weight: bold;

@@ -15,11 +15,15 @@
 /* button {
   width:100%;
 } */
+button {
+  display: inline-block;
+}
 .dep{
-  width:50%;
+  width:100%;
   margin:0%
 }
 .emp{
-  width:100%;
+  /* width:auto; */
+   width:100%;
 }
 </style>

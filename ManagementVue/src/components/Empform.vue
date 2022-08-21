@@ -36,15 +36,11 @@
               />
             </div>
             <div class="form-group">
-              <input class="form-control" placeholder="department_name" v-model="depart_id">
-                <!-- <option
-                  v-for="depname in deparray"
-                  v-bind:key="depname.name"
-                  v-bind:value="depname.depart_id"
-                >
-                  {{ depname.name }}
-                </option> -->
+              <select class="form-control" placeholder="department_name" v-model="selectedDepart" @change ="filterval()">
+              <option v-for="depts in deparray" v-bind:key="depts.name" v-bind:value =depts.depart_id>{{ depts.name }} </option>
+              </select>
             </div>
+            <!-- v-bind:key="depts.name" v-bind:value="depts.depart_id" -->
 
             <button class="btn btn-primary btn-block" type="button" @click="onSubmit">Submit</button>
             <!-- <button v-else type="button" @click="updateRow(updateIndex)">UpdateRow</button> -->
@@ -66,7 +62,7 @@ export default {
       doj: "",
       email: "",
       phone: "",
-      depart_id: "",
+      selectedDepart: "",
       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       deparray: [],
       instance: null,
@@ -82,7 +78,7 @@ export default {
     };
   },
 
-  mounted: function () {
+  mounted: async function () {
     this.instance = axios.create({
       baseURL: "http://127.0.0.1:3333",
       headers: {
@@ -90,8 +86,9 @@ export default {
         App_KEY: "3hQ9USEF_4EHusOtym2TwZT64EKgrV90",
       },
     });
-    // const depnames = this.instance.get("/selectdep");
-    // this.deparray = depnames.data;
+    const depnames = await this.instance.get("/selectdep", this.config);
+     this.deparray = depnames.data;
+    console.log(deparray)
   },
   methods: {
     async onSubmit() {
@@ -101,7 +98,7 @@ export default {
         doj: this.doj,
         email: this.email,
         phone: this.phone,
-        depart_id: this.depart_id,
+        depart_id: this.selectedDepart,
       };
       if (!/^[a-zA-Z]+(?:-[a-zA-Z]+)*$/.test(this.name)) {
         alert("Enter name");
@@ -129,6 +126,24 @@ export default {
         this.alldetails.splice(i, 1);
       }
     },
+    async filterval(){
+    const tableDetails = await this.instance.get("/selectemp",this.config)
+    if(this.depart_id == null)
+    {
+        this.allDetails =  tableDetails.data
+    }
+    else if(this.depart_id == 0)
+    {
+        this.allDetails = tableDetails.data.reverse()
+    }
+    else
+    {
+        this.allDetails = tableDetails.data.filter(el =>
+        {
+             return  el.department_id == this.depart_id;
+        })
+    }
+},
 
     clearForm() {
       this.name = "";
