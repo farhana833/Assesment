@@ -1,4 +1,5 @@
 <template>
+
  <router-link to="/Department"><button class="dep">Department Management</button></router-link>
  <router-link to="/Employee"><button class="emp">Employee Management</button></router-link>
  

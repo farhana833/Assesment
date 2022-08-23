@@ -14,9 +14,20 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Employee <b>Details</b></h2></div>
+                    <div class="col-sm-8"><h2>Department <b>Details</b></h2></div>
+                    <select
+                class="dropdownStyle"
+                name="item"
+                id="item"
+                v-model="value"
+                @change="filterval()"
+              >
+                 <option value="" disabled hidden>Select Value</option>
+                <option :value="null">ASC</option>
+                <option :value="0">DESC</option>
+              </select>
                     <div class="col-sm-4">
-                    
+                     
                   <div class="form"><router-link to="/Form"><button class="btn btn-info add-new">Add Data</button></router-link></div>
 </div>
                 </div>
@@ -65,6 +76,7 @@ export default {
   data: () => ({
     depart_id: "",
     name: "",
+    value:"",
     alldetails: [],
     ishidden:true,
     config: {
@@ -108,6 +120,14 @@ export default {
        }
     )
        }},
+        async filterval() {
+      const tableDetails = await this.instance.get("/selectdep", this.config);
+      if (this.value == null) {
+        this.alldetails = tableDetails.data;
+      } else if (this.value == 0) {
+        this.alldetails = tableDetails.data.reverse();
+      }
+},
 
    revertTable(entry){
 
@@ -146,25 +166,7 @@ export default {
 // },
 
 
-  search() {
-  var input, filter, table, tr, td, j, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (j = 0; j < tr.length; j++) {
-    td = tr[j].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[j].style.display = "";
-      } else {
-        tr[j].style.display = "none";
-      }
-    }       
-  }
-}
-}};
+ }}
 </script>
 <style>
 body {

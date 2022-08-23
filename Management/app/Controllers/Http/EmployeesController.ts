@@ -7,7 +7,7 @@ export default class EmployeesController {
     public async selectemp() 
         {
      try{
-            return await Employee.all()}
+            return await Employee.query().orderBy('name','asc');}
         catch {
             return(" department is not found")
         }
@@ -68,4 +68,5 @@ export default class EmployeesController {
     //     }
     // }
 }
+
 
